@@ -5,7 +5,6 @@
  */
 package Beans;
 
-
 import Util.DBSingleton;
 import java.io.IOException;
 import java.security.MessageDigest;
@@ -31,8 +30,8 @@ import javax.sql.rowset.CachedRowSet;
 
 @SessionScoped
 public class AuthenticationProvider {
-    
-    @ManagedProperty(value="#{user}")
+
+    @ManagedProperty(value = "#{user}")
     private User user;
 
     public User getUser() {
@@ -42,17 +41,18 @@ public class AuthenticationProvider {
     public void setUser(User user) {
         this.user = user;
     }
+
     /**
      * Creates a new instance of AuthenticationProvider
      */
     public AuthenticationProvider() {
-     try {
+        try {
             DBSingleton.init();
         } catch (SQLException ex) {
             Logger.getLogger(AuthenticationProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private String calc_hash(String pass) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -67,18 +67,18 @@ public class AuthenticationProvider {
         }
         return null;
     }
-    
+
     public void login() throws IOException {
         try {
-            CachedRowSet crs=DBSingleton.getCRS();
+            CachedRowSet crs = DBSingleton.getCRS();
             crs.setCommand("SELECT * FROM USERS WHERE USERNAME = ?");
 
             crs.setString(1, this.user.getUsername());
             crs.execute();
 
             while (crs.next()) {
-                if (crs.getString("username").equals(this.user.getUsername())) {
-                    String pass = crs.getString("PASSWORD");
+                if (crs.getString("USERNAME").equals(this.user.getUsername())) {
+                    String pass = crs.getString("HASHPASS");
                     String pass_hash = calc_hash(this.user.getPassword());
                     if (pass.contentEquals(pass_hash)) {
                         this.user.setLoggedIn(true);
@@ -101,19 +101,37 @@ public class AuthenticationProvider {
         }
     }
 
-    public void signUp(){
+    public void signUp() {
         try {
-            Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/Project", "a","b");
+            Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/Project", "a", "b");
             Class.forName("org.apache.derby.jdbc.ClientDriver");
-            String pass=calc_hash(user.getPassword());
-            String query="INSERT INTO USERS(USERNAME, PASSWORD, NAME, LICENSE_NUMBER, PHONEID, UAEID_NUMBER, ADDRESS, EMAIL, BANKCARDINFO, PROPERTIES_BOUGHT, PROPERTIES_SOLD, RATINGS, REVIEWS) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
-            PreparedStatement ps=con.prepareStatement(query);
-            //TODO: Add values to prepared Statement and execute
-            
-            
+            String pass = calc_hash(user.getPassword());
+            String query = "INSERT INTO USERS(USERNAME, HASHPASS, FULL_NAME, CONTACTNO, EID, P_ADDRESS, EMAIL, BANKCARDINFO) VALUES(?,?,?,?,?,?,?,?)";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, user.getUsername());
+            ps.setString(2, calc_hash(user.getPassword()));
+            ps.setString(3, user.getName());
+            ps.setString(4, user.getId());
+            ps.setString(5, user.getPhone());
+            ps.setString(6, user.getAddress());
+            ps.setString(7, user.getEmail());
+            ps.setString(8, user.getCardNo());
+
+            boolean success = ps.execute();
+
+            if (success) {
+                FacesContext context = FacesContext.getCurrentInstance();
+                HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+                response.sendRedirect("index.xhtml");
+            } else {
+                FacesContext context = FacesContext.getCurrentInstance();
+                HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+                //TODO: Error Handling pages
+                response.sendRedirect("error.xhtml");
+            }
         } catch (Exception ex) {
             Logger.getLogger(AuthenticationProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 }
