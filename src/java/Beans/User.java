@@ -22,11 +22,16 @@ public class User implements Serializable{
      */
     
     private String username;
+    private String password;
     private String name;
     private String id;
     private String phone;
     private String address;
-    private String password;
+    private String email;
+    private String cardNo;
+    private int rating;
+    private String review;
+
     private boolean loggedIn = false;
 
     public String getUsername() {
@@ -35,6 +40,14 @@ public class User implements Serializable{
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getName() {
@@ -69,12 +82,36 @@ public class User implements Serializable{
         this.address = address;
     }
 
-    public String getPassword() {
-        return password;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCardNo() {
+        return cardNo;
+    }
+
+    public void setCardNo(String cardNo) {
+        this.cardNo = cardNo;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public String getReview() {
+        return review;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
     }
 
     public boolean isLoggedIn() {
@@ -84,8 +121,6 @@ public class User implements Serializable{
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;
     }
-    
-    
     
     public User() {
     }
