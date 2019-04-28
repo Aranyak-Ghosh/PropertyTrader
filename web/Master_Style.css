@@ -1,0 +1,18 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Apr 21, 2019, 11:25:06 PM
+    Author     : yaseenfarooqui
+*/
+
+.heading { font-family:  Tahoma,Verdana,Segoe,sans-serif; background-color: #0984E7 ;  color: white ; text-align: center;}
+.gen{font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif; background-color: #EAECEE;}
+.img1{width: 260px; height: 260px;}
+.img2{width: 180px; height: 180px;} 
+.error{color:red}
+.cars{text-align: center; min-height: 30;}
+.car_row{min-height: 90px;}
+
