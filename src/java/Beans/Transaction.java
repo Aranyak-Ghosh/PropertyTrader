@@ -1,9 +1,6 @@
 package Beans;
 
-import java.awt.Image;
 import java.io.Serializable;
-import javax.inject.Named;
-import javax.enterprise.context.Dependent;
 import javax.faces.bean.ManagedBean;
 
 /**
