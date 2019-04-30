@@ -22,8 +22,6 @@ public class User implements Serializable{
     private String address;
     private String email;
     private String cardNo;
-    private int rating;
-    private String review;
 
     private boolean loggedIn = false;
 
@@ -89,22 +87,6 @@ public class User implements Serializable{
 
     public void setCardNo(String cardNo) {
         this.cardNo = cardNo;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-
-    public String getReview() {
-        return review;
-    }
-
-    public void setReview(String review) {
-        this.review = review;
     }
 
     public boolean isLoggedIn() {
