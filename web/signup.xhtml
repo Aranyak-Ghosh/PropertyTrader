@@ -1,0 +1,130 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="Style/mycss.css" type="text/css" />
+</h:head>
+<h:body class="gen">
+    <center>
+        <h1 class="heading">Sign Up</h1>
+    </center>
+    <br />
+    <center>
+        <h:form>
+            <table cellspacing="20">
+
+                <tbody>
+
+                    <tr>
+                        <td>
+                            <h2>Login Credentials</h2>
+                            <hr />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><b>USERNAME*</b></td>
+                        <td>
+                            <h:inputText id="uname" value="#{auth.user.username}" label="Username" required="true"
+                                requiredMessage=" Username is reqired" />
+                            <h:message for="uname" styleClass="error" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>PASSWORD*</b></td>
+                        <td>
+                            <h:inputSecret id="pass" value="#{auth.user.password}" label="Password" required="true"
+                                requiredMessage=" Password is reqired" />
+                            <h:message for="pass" styleClass="error" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>FULL NAME*</b></td>
+                        <td>
+                            <h:inputText id="name" value="#{auth.user.name}" label="Fullname" required="true"
+                                requiredMessage=" Name is reqired" />
+                            <h:message for="name" styleClass="error" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <h2>Personal Information</h2>
+                            <hr />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><b>Emirates ID NUMBER</b></td>
+                        <td>
+                            <h:inputText id="eid1" value="#{auth.user.id}"
+                                validatorMessage="Length cannot be more than 3 digits">
+                                <f:validateLength minimum="0" maximum="3" />
+                            </h:inputText>
+                            -
+                            <h:inputText id="eid2" value="#{auth.user.id}"
+                                validatorMessage="Length cannot be more than 4 digits">
+                                <f:validateLength minimum="0" maximum="4" />
+                            </h:inputText>
+                            -
+                            <h:inputText id="eid3" value="#{auth.user.id}"
+                                validatorMessage="Length cannot be more than 7 digits">
+                                <f:validateLength minimum="0" maximum="7" />
+                            </h:inputText>
+                            -
+                            <h:inputText id="eid4" value="#{auth.user.id}"
+                                validatorMessage="Length cannot be more than 1 digits">
+                                <f:validateLength minimum="0" maximum="1" />
+                            </h:inputText>
+                            <h:message for="eid1" styleClass="error" />
+                            <h:message for="eid2" styleClass="error" />
+                            <h:message for="eid3" styleClass="error" />
+                            <h:message for="eid4" styleClass="error" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>PHONE*</b></td>
+                        <td>
+                            <h:inputText id="phone" value="#{auth.user.phone}"
+                                validatorMessage="Length cannot be more than 20 digits">
+                                <f:validateLength minimum="0" maximum="20" />
+                            </h:inputText>
+                            <h:message for="phone" styleClass="error" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>ADDRESS</b></td>
+                        <td>
+                            <h:inputText id="add" value="#{auth.user.address}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>EMAIL ID</b></td>
+                        <td>
+                            <h:inputText id="email" value="#{auth.user.email}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>CREDIT CARD NUMBER</b></td>
+                        <td>
+                            <h:inputText id="credit" value="#{auth.user.cardNo}"
+                                validatorMessage="Length cannot be more than 20 digits">
+                                <f:validateLength minimum="0" maximum="20" />
+                            </h:inputText>
+                            <h:message for="credit" styleClass="error" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+            <i>Fields marked with (*) are mandatory</i>
+            <br /><br />
+            <h:commandButton value="Sign Up" action="${auth.signUp}" />
+        </h:form>
+    </center>
+</h:body>
+
+</html>
