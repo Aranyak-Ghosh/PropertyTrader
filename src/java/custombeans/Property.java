@@ -1,5 +1,5 @@
 
-package Beans;
+package custombeans;
 
 import java.awt.Image;
 import java.io.Serializable;

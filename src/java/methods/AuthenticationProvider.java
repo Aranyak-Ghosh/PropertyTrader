@@ -1,6 +1,7 @@
-package Beans;
+package methods;
 
 import Util.DBSingleton;
+import custombeans.User;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
