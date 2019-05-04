@@ -19,7 +19,7 @@ import javax.sql.rowset.CachedRowSet;
 
 /**
  *
- * @author b00060789
+ * @author yaseenfarooqui
  */
 @ManagedBean(name = "auth")
 
@@ -127,6 +127,10 @@ public class AuthenticationProvider {
         } catch (Exception ex) {
             Logger.getLogger(AuthenticationProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void logout(){
+        this.user.setLoggedIn(false);
     }
 
 }
