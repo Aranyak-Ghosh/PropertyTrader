@@ -78,7 +78,7 @@ public class AuthenticationProvider {
                     String pass_hash = calc_hash(this.user.getPassword());
                     if (pass.contentEquals(pass_hash)) {
                         this.user.setLoggedIn(true);
-                        this.user.setName(crs.getString("NAME"));
+                        this.user.setName(crs.getString("FULL_NAME"));
                         FacesContext context = FacesContext.getCurrentInstance();
                         HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
                         response.sendRedirect("Buyer_Seller_Home.xhtml");
@@ -102,13 +102,13 @@ public class AuthenticationProvider {
             Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/Project", "a", "b");
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             String pass = calc_hash(user.getPassword());
-            String query = "INSERT INTO USERS(USERNAME, HASHPASS, FULL_NAME, CONTACTNO, EID, P_ADDRESS, EMAIL, BANKCARDINFO) VALUES(?,?,?,?,?,?,?,?)";
+            String query = "INSERT INTO USERS(USERNAME, HASHPASS, FULL_NAME, CONTACTNO, EID, P_ADDRESS, EMAIL, BANKCARD_INFO) VALUES(?,?,?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, user.getUsername());
             ps.setString(2, calc_hash(user.getPassword()));
             ps.setString(3, user.getName());
-            ps.setString(4, user.getId());
-            ps.setString(5, user.getPhone());
+            ps.setString(4, user.getPhone());
+            ps.setString(5, user.getId());
             ps.setString(6, user.getAddress());
             ps.setString(7, user.getEmail());
             ps.setString(8, user.getCardNo());
