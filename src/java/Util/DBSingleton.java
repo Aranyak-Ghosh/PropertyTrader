@@ -1,5 +1,5 @@
 
-package Util;
+package util;
 
 import java.sql.SQLException;
 import javax.sql.rowset.CachedRowSet;
@@ -34,12 +34,12 @@ public class DBSingleton {
             initialized = true;
         }
     }
-    
-    public static CachedRowSet getCRS() throws Exception{
-        if(!initialized)
+
+    public static CachedRowSet getCRS() throws Exception {
+        if (!initialized)
             throw new Exception("CRS instance not initialized");
         else
             return crs;
     }
-    
+
 }

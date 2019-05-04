@@ -1,6 +1,6 @@
 package methods;
 
-import Util.DBSingleton;
+import util.DBSingleton;
 import custombeans.User;
 import java.io.IOException;
 import java.security.MessageDigest;
