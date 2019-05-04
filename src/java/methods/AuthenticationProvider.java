@@ -105,7 +105,7 @@ public class AuthenticationProvider {
             String query = "INSERT INTO USERS(USERNAME, HASHPASS, FULL_NAME, CONTACTNO, EID, P_ADDRESS, EMAIL, BANKCARD_INFO) VALUES(?,?,?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, user.getUsername());
-            ps.setString(2, calc_hash(user.getPassword()));
+            ps.setString(2, pass);
             ps.setString(3, user.getName());
             ps.setString(4, user.getPhone());
             ps.setString(5, user.getId());
