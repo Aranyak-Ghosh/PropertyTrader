@@ -17,7 +17,8 @@ public class Property implements Serializable {
     private int numBath;
     private int numBed;
     private int price;
-    private Image pictures; //Not so sure about this
+    private String owner;
+    private String pictures; //Not so sure about this
 
     public Property() {
     }
@@ -69,12 +70,20 @@ public class Property implements Serializable {
     public void setPrice(int price) {
         this.price = price;
     }
+    
+    public String getOwner() {
+        return owner;
+    }
 
-    public Image getPictures() {
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public String getPictures() {
         return pictures;
     }
 
-    public void setPictures(Image pictures) {
+    public void setPictures(String pictures) {
         this.pictures = pictures;
     }
     
