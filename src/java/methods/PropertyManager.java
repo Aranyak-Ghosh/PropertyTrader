@@ -1,10 +1,6 @@
 package methods;
 
-import util.DBSingleton;
-import custombeans.User;
 import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -22,11 +18,14 @@ import javax.sql.rowset.CachedRowSet;
 
 import custombeans.Property;
 
+import custombeans.User;
+
+import util.DBSingleton;
+
 /**
  *
  * @author yaseenfarooqui
  */
-
 @ManagedBean(name = "property")
 public class PropertyManager {
 
@@ -59,7 +58,7 @@ public class PropertyManager {
         try {
             Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/Project", "a", "b");
             Class.forName("org.apache.derby.jdbc.ClientDriver");
-            String query = "INSERT INTO PROPERTY(TYPEID, AREA, ORIGINYEAR, BATHROOMS, BEDROOMS, PROPERTY_ID, PRICE, PICTURES, OWNED_BY) VALUES (?,?,?,?,?,?,?,?,?)";
+            String query = "INSERT INTO PROPERTY(TYPEID, AREA, ORIGINYEAR, BATHROOMS, BEDROOMS, PROPERTY_ID, PRICE, PICTURES, OWNED_BY, AVAILABLE) VALUES (?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(query);
 
             int id = 0;
@@ -67,8 +66,9 @@ public class PropertyManager {
             crs.setCommand("SELECT COUNT(*) AS NUMROWS FROM PROPERTY");
             crs.execute();
 
-            if (crs.next())
+            if (crs.next()) {
                 id = crs.getInt("NUMROWS");
+            }
 
             ps.setInt(1, property.getTypeID());
             ps.setString(2, property.getArea());
@@ -79,6 +79,7 @@ public class PropertyManager {
             ps.setInt(7, property.getPrice());
             ps.setString(8, property.getPictures());
             ps.setString(9, property.getOwner());
+            ps.setInt(10, 1);
 
             boolean success = ps.execute();
 
@@ -100,7 +101,7 @@ public class PropertyManager {
     }
 
     public ArrayList<Property> getPropertybyPrice(int minprice, int maxprice) {
-        ArrayList<Property> properties=null;
+        ArrayList<Property> properties = null;
         try {
             CachedRowSet crs = DBSingleton.getCRS();
             crs.setCommand("SELECT * FROM PROPERTY WHERE PRICE>? AND PRICE<?");
@@ -108,67 +109,72 @@ public class PropertyManager {
             crs.setInt(2, maxprice);
             crs.execute();
 
-            properties=generateArraylist(crs);
-            
+            properties = generateArraylist(crs);
+
         } catch (Exception ex) {
             Logger.getLogger(PropertyManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return properties;
     }
 
-    public ArrayList<Property> getPropertiesbyArea(String area){
-        ArrayList<Property> properties=null;
-        
-        try{
-            CachedRowSet crs=DBSingleton.getCRS();
-            
+    public ArrayList<Property> getPropertiesbyArea(String area) {
+        ArrayList<Property> properties = null;
+
+        try {
+            CachedRowSet crs = DBSingleton.getCRS();
+
             crs.setCommand("SELECT * FROM PROPERTY WHERE AREA LIKE ?");
-            
-            crs.setString(1,"%"+area+"%");
+
+            crs.setString(1, "%" + area + "%");
             crs.execute();
 
-            properties=generateArraylist(crs);
-        }catch(Exception e){
-            Logger.getLogger(PropertyManager.class.getSimpleName()).log(Level.SEVERE,null,e);
+            properties = generateArraylist(crs);
+        } catch (Exception e) {
+            Logger.getLogger(PropertyManager.class.getSimpleName()).log(Level.SEVERE, null, e);
         }
 
         return properties;
     }
 
-    public ArrayList<Property> getPropertybyType(int typeID){
-        ArrayList<Property> properties=null;
-        
-        try{
-            CachedRowSet crs=DBSingleton.getCRS();
-            
+    public ArrayList<Property> getPropertybyType(int typeID) {
+        ArrayList<Property> properties = null;
+
+        try {
+            CachedRowSet crs = DBSingleton.getCRS();
+
             crs.setCommand("SELECT * FROM PROPERTY WHERE TYPEID = ?");
-            
-           crs.setInt(1, typeID);
+
+            crs.setInt(1, typeID);
             crs.execute();
 
-            properties=generateArraylist(crs);
-        }catch(Exception e){
-            Logger.getLogger(PropertyManager.class.getSimpleName()).log(Level.SEVERE,null,e);
+            properties = generateArraylist(crs);
+        } catch (Exception e) {
+            Logger.getLogger(PropertyManager.class.getSimpleName()).log(Level.SEVERE, null, e);
         }
 
         return properties;
     }
 
-    private ArrayList<Property> generateArraylist(CachedRowSet crs){
-        
-        ArrayList<Property> properties=new ArrayList<Property>();
+    private ArrayList<Property> generateArraylist(CachedRowSet crs) {
 
-        while(crs.next()){
-            Property temp=new Property();
-            temp.setTypeID(crs.getInt("TYPEID"));
-            temp.setArea(crs.getString("AREA"));
-            temp.setNumBath(crs.getInt("BATHROOMS");
-            temp.setNumBed(crs.getInt("BEDROOMS"));
-            temp.setOwner(crs.getString("OWNED_BY"));
-            temp.setPictures(crs.getString("PICTURES"));
-            temp.setPrice(crs.getInt("PRICE"));
-            temp.setYear(crs.getInt("ORIGINYEAR"));
-            properties.add(temp);
+        ArrayList<Property> properties = new ArrayList<Property>();
+
+        try {
+            while (crs.next()) {
+                Property temp = new Property();
+                temp.setTypeID(crs.getInt("TYPEID"));
+                temp.setArea(crs.getString("AREA"));
+                temp.setNumBath(crs.getInt("BATHROOMS"));
+                temp.setNumBed(crs.getInt("BEDROOMS"));
+                temp.setOwner(crs.getString("OWNED_BY"));
+                temp.setPictures(crs.getString("PICTURES"));
+                temp.setPrice(crs.getInt("PRICE"));
+                temp.setYear(crs.getInt("ORIGINYEAR"));
+                temp.setAvailable(crs.getInt("AVAILABLE"));
+                properties.add(temp);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PropertyManager.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return properties;

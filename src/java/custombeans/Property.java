@@ -11,7 +11,9 @@ import javax.faces.bean.ManagedBean;
  */
 @ManagedBean(name = "property")
 public class Property implements Serializable {
+    
     private int typeID;
+    private int available;
     private String area;
     private int year;
     private int numBath;
@@ -19,6 +21,7 @@ public class Property implements Serializable {
     private int price;
     private String owner;
     private String pictures; //Not so sure about this
+    private int property_ID;
 
     public Property() {
     }
@@ -85,6 +88,22 @@ public class Property implements Serializable {
 
     public void setPictures(String pictures) {
         this.pictures = pictures;
+    }
+
+    public int getProperty_ID() {
+        return property_ID;
+    }
+
+    public void setProperty_ID(int property_ID) {
+        this.property_ID = property_ID;
+    }
+
+    public int getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(int available) {
+        this.available = available;
     }
     
 }
