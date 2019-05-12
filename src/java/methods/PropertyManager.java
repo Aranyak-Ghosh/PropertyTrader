@@ -26,7 +26,7 @@ import util.DBSingleton;
  *
  * @author yaseenfarooqui
  */
-@ManagedBean(name = "property")
+@ManagedBean(name = "propertyManager")
 public class PropertyManager {
 
     @ManagedProperty(value = "#{user}")
@@ -54,7 +54,8 @@ public class PropertyManager {
         this.property = property;
     }
 
-    public void addProperty() {
+    public void addProperty(String username) {
+        this.property.setOwner(username);
         try {
             Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/Project", "a", "b");
             Class.forName("org.apache.derby.jdbc.ClientDriver");
@@ -69,6 +70,7 @@ public class PropertyManager {
             if (crs.next()) {
                 id = crs.getInt("NUMROWS");
             }
+            this.property.setProperty_ID(id);
 
             ps.setInt(1, property.getTypeID());
             ps.setString(2, property.getArea());
