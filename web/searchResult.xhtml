@@ -19,6 +19,10 @@
                     <h:outputText value="#{property.id}" />
                 </h:column>
                 <h:column>
+                    <f:facet name='header'>OWNER</f:facet>
+                    <h:outputText value="#{property.owner}" />
+                </h:column>
+                <h:column>
                     <f:facet name='header'>TYPE</f:facet>
                     <h:outputText value="#{property.typeName}" />
                 </h:column>
@@ -55,8 +59,8 @@
 
                 <h:column>
                     <f:facet name='header'>Buy</f:facet>
-                    <h:commandButton value='Buy Property' action="#{transaction.addTransaction()}"
-                        actionListener="#{propertyManager.setCurrentProperty(property.id)}" />
+                    <h:commandButton value='Buy Property' action="confirmPurchase"
+                        actionListener="#{transactionManager.init(property.id,auth.user.username,property.owner)}" />
                 </h:column>
 
             </h:dataTable>

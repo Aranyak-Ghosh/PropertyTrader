@@ -11,12 +11,16 @@
         <h1 class="heading">You Can View All Your Properties Here</h1>
         <h2> LIST OF YOUR PROPERTIES</h2>
         <h:form>
-            <h:dataTable var='property' value="#{propertyManager.getPropertyByOwner(auth.user.username)}" cellspacing="20"
-                styleClass="property">
+            <h:dataTable var='property' value="#{propertyManager.getPropertyByOwner(auth.user.username)}"
+                cellspacing="20" styleClass="property">
 
                 <h:column>
                     <f:facet name='header'>ID</f:facet>
                     <h:outputText value="#{property.id}" />
+                </h:column>
+                <h:column>
+                    <f:facet name='header'>OWNER</f:facet>
+                    <h:outputText value="#{property.owner}" />
                 </h:column>
                 <h:column>
                     <f:facet name='header'>TYPE</f:facet>
