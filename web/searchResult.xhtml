@@ -11,7 +11,7 @@
         <h1 class="heading">You Can View All Your Properties Here</h1>
         <h2> LIST OF YOUR PROPERTIES</h2>
         <h:form>
-            <h:dataTable var='property' value="#{propertyManager.getPropertyByOwner(auth.user.username)}" cellspacing="20"
+            <h:dataTable var='property' value="#{propertyManager.searchProperty()}" cellspacing="20"
                 styleClass="property">
 
                 <h:column>
@@ -54,14 +54,8 @@
                 </h:column>
 
                 <h:column>
-                    <f:facet name='header'>EDIT</f:facet>
-                    <h:commandButton value='Edit' action="editProperty"
-                        actionListener="#{propertyManager.setCurrentProperty(property.id)}" />
-                </h:column>
-
-                <h:column>
-                    <f:facet name='header'>DELETE</f:facet>
-                    <h:commandButton value='Delete' action="deleteProperty"
+                    <f:facet name='header'>Buy</f:facet>
+                    <h:commandButton value='Buy Property' action="#{transaction.addTransaction()}"
                         actionListener="#{propertyManager.setCurrentProperty(property.id)}" />
                 </h:column>
 

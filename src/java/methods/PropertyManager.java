@@ -35,6 +35,53 @@ public class PropertyManager {
     @ManagedProperty(value = "#{property}")
     private Property property;
 
+    public class SearchParam {
+
+        private int minprice;
+        private int maxprice;
+        private String area;
+        private int typeID;
+
+        public SearchParam() {
+        }
+
+        public int getMinprice() {
+            return minprice;
+        }
+
+        public void setMinprice(int minprice) {
+            this.minprice = minprice;
+        }
+
+        public int getMaxprice() {
+            return maxprice;
+        }
+
+        public void setMaxprice(int maxprice) {
+            this.maxprice = maxprice;
+        }
+
+        public String getArea() {
+            return area;
+        }
+
+        public void setArea(String area) {
+            this.area = area;
+        }
+
+        public int getTypeID() {
+            return typeID;
+        }
+
+        public void setTypeID(int typeID) {
+            this.typeID = typeID;
+        }
+
+    };
+
+    @ManagedProperty(value = "#{query}")
+    private SearchParam query;
+
     public PropertyManager() {
     }
 
@@ -145,6 +192,48 @@ public class PropertyManager {
             crs.setCommand("SELECT * FROM PROPERTY WHERE TYPEID = ? AND AVAILABLE = 1");
 
             crs.setInt(1, typeID);
+            crs.execute();
+
+            properties = generateArraylist(crs);
+        } catch (Exception e) {
+            Logger.getLogger(PropertyManager.class.getSimpleName()).log(Level.SEVERE, null, e);
+        }
+
+        return properties;
+    }
+
+    public ArrayList<Property> getPropertyByOwner(String owner) {
+        ArrayList<Property> properties = null;
+
+        try {
+            CachedRowSet crs = DBSingleton.getCRS();
+
+            crs.setCommand("SELECT * FROM PROPERTY WHERE OWNED_BY=?");
+
+            crs.setString(1, owner);
+            crs.execute();
+
+            properties = generateArraylist(crs);
+        } catch (Exception e) {
+            Logger.getLogger(PropertyManager.class.getSimpleName()).log(Level.SEVERE, null, e);
+        }
+
+        return properties;
+    }
+
+    public ArrayList<Property> searchProperty() {
+        ArrayList<Property> properties = null;
+
+        try {
+            CachedRowSet crs = DBSingleton.getCRS();
+
+            crs.setCommand(
+                    "SELECT * FROM PROPERTY WHERE TYPEID = ? AND AREA LIKE ? AND PRICE>? AND PRICE<? AND AVAILABLE = 1");
+
+            crs.setInt(1, this.query.typeID);
+            crs.setString(2, "%" + this.query.area + "%");
+            crs.setInt(3, this.query.minprice);
+            crs.setInt(4, this.query.maxprice);
             crs.execute();
 
             properties = generateArraylist(crs);
