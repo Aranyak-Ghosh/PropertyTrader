@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head>
+    <title>Home</title>
+    <link rel="stylesheet" href="Style/mycss.css" type="text/css" />
+</h:head>
+<h:body class="gen">
+    <center>
+        <h1 class="heading">Welcome to the Portal ${auth.user.name}</h1>
+        <br />
+        <h2>WHAT WOULD YOU LIKE TO DO ? </h2>
+        <h:form>
+            <table cellspacing="25">
+                <tbody>
+                    <tr>
+                        <td>
+                            <center>
+                                <h:commandButton value="Buy Property" action="buycars" />
+                            </center>
+                        </td>
+                        <td>
+                            <center>
+                                <h:commandButton value="Add Property for Sale" action="sellcars"
+                                    actionListener="#{car.reset()}" />
+                            </center>
+                        </td>
+                        <td>
+                            <center>
+                                <h:commandButton value="Statistics" action="stats" />
+                            </center>
+                        </td>
+                    </tr>
+                    <br />
+                    <tr>
+                        <td>
+                            <center>
+                                <h:commandButton value="View/Edit Your Property" action="editcars" />
+                            </center>
+                        </td>
+                        <td>
+                            <center>
+                                <h:commandButton value="Remove Property" action="deletecars" />
+                            </center>
+                        </td>
+                        <td>
+                            <center>
+                                <h:commandButton value="Log Out" action="index" />
+                            </center>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </h:form>
+    </center>
+
+
+</h:body>
+
+</html>

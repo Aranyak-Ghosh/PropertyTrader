@@ -81,7 +81,7 @@ public class AuthenticationProvider {
                         this.user.setName(crs.getString("FULL_NAME"));
                         FacesContext context = FacesContext.getCurrentInstance();
                         HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-                        response.sendRedirect("Buyer_Seller_Home.xhtml");
+                        response.sendRedirect("home.xhtml");
                     } else {
                         FacesContext context = FacesContext.getCurrentInstance();
                         HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
