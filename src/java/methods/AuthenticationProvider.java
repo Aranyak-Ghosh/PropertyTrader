@@ -85,7 +85,7 @@ public class AuthenticationProvider {
                     } else {
                         FacesContext context = FacesContext.getCurrentInstance();
                         HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-                        response.sendRedirect("index.xhtml");
+                        response.sendRedirect("authError.xhtml");
                     }
 
                 }
@@ -118,12 +118,11 @@ public class AuthenticationProvider {
             if (success) {
                 FacesContext context = FacesContext.getCurrentInstance();
                 HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-                response.sendRedirect("index.xhtml");
+                response.sendRedirect("accountCreated.xhtml");
             } else {
                 FacesContext context = FacesContext.getCurrentInstance();
                 HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-                //TODO: Error Handling pages
-                response.sendRedirect("error.xhtml");
+                response.sendRedirect("authError.xhtml");
             }
         } catch (Exception ex) {
             Logger.getLogger(AuthenticationProvider.class.getName()).log(Level.SEVERE, null, ex);

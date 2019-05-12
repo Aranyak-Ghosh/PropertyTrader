@@ -86,12 +86,10 @@ public class PropertyManager {
             if (success) {
                 FacesContext context = FacesContext.getCurrentInstance();
                 HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-                // TODO: Successfully added page
                 response.sendRedirect("index.xhtml");
             } else {
                 FacesContext context = FacesContext.getCurrentInstance();
                 HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-                // TODO: Error Handling pages
                 response.sendRedirect("error.xhtml");
             }
 
@@ -104,7 +102,7 @@ public class PropertyManager {
         ArrayList<Property> properties = null;
         try {
             CachedRowSet crs = DBSingleton.getCRS();
-            crs.setCommand("SELECT * FROM PROPERTY WHERE PRICE>? AND PRICE<?");
+            crs.setCommand("SELECT * FROM PROPERTY WHERE PRICE>? AND PRICE<? AND AVAILABLE = 1");
             crs.setInt(1, minprice);
             crs.setInt(2, maxprice);
             crs.execute();
@@ -123,7 +121,7 @@ public class PropertyManager {
         try {
             CachedRowSet crs = DBSingleton.getCRS();
 
-            crs.setCommand("SELECT * FROM PROPERTY WHERE AREA LIKE ?");
+            crs.setCommand("SELECT * FROM PROPERTY WHERE AREA LIKE ? AND AVAILABLE = 1");
 
             crs.setString(1, "%" + area + "%");
             crs.execute();
@@ -142,7 +140,7 @@ public class PropertyManager {
         try {
             CachedRowSet crs = DBSingleton.getCRS();
 
-            crs.setCommand("SELECT * FROM PROPERTY WHERE TYPEID = ?");
+            crs.setCommand("SELECT * FROM PROPERTY WHERE TYPEID = ? AND AVAILABLE = 1");
 
             crs.setInt(1, typeID);
             crs.execute();
