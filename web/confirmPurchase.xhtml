@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head>
+    <title>Error</title>
+    <link rel="stylesheet" href="Style/mycss.css" type="text/css" />
+</h:head>
+<h:body class="gen">
+    <h:form>
+        <center>
+            <h1 class="heading">Are you sure you want to purchase this Property?</h1>
+            <br />
+            <center>
+                <h:commandButton value="Go Back" action="searchResult" />
+                <h:commandButton value="Purchase" action="#{transactionManager.addTransaction()}" />
+            </center>
+        </center>
+    </h:form>
+</h:body>
+
+</html>

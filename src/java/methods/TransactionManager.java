@@ -17,43 +17,46 @@ import custombeans.Transaction;
 
 import util.DBSingleton;
 
-@ManagedBean(name = "transaction")
+@ManagedBean(name = "transactionManager")
 public class TransactionManager {
 
-    @ManagedProperty(value = "#{property}")
-    private Property property;
+    private int propertyID;
 
-    @ManagedProperty(value = "#{owner}")
-    private User owner;
+    private String owner;
 
-    @ManagedProperty(value = "#{buyer}")
-    private User buyer;
+    private String buyer;
 
     public TransactionManager() {
     }
 
-    public Property getProperty() {
-        return property;
+    public int getPropertyID() {
+        return propertyID;
     }
 
-    public void setProperty(Property property) {
-        this.property = property;
+    public void setPropertyID(int propertyID) {
+        this.propertyID = propertyID;
     }
 
-    public User getOwner() {
+    public String getOwner() {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(String owner) {
         this.owner = owner;
     }
 
-    public User getBuyer() {
+    public String getBuyer() {
         return buyer;
     }
 
-    public void setBuyer(User buyer) {
+    public void setBuyer(String buyer) {
         this.buyer = buyer;
+    }
+
+    public void init(int propertyID, String buyer, String owner) {
+        this.propertyID = propertyID;
+        this.buyer = buyer;
+        this.owner = owner;
     }
 
     public void addTransaction() {
@@ -74,30 +77,32 @@ public class TransactionManager {
                 id = crs.getInt("NUMROWS");
             }
 
-            ps.setInt(1, property.getProperty_ID());
+            ps.setInt(1, propertyID);
             ps.setInt(2, id);
-            ps.setString(3, buyer.getUsername());
-            ps.setString(4, owner.getUsername());
+            ps.setString(3, buyer);
+            ps.setString(4, owner);
 
             boolean success = ps.execute();
 
             if (success) {
                 String propertyQuery = "SELECT * FROM PROPERTY WHERE PROPERTY_ID = ?";
                 crs.setCommand(propertyQuery);
+                crs.setInt(1, propertyID);
                 crs.execute();
                 if (crs.next()) {
                     crs.updateInt("AVAILABLE", 0);
+                    crs.updateString("OWNED_BY", buyer);
                     crs.acceptChanges();
                 }
-                //TODO: Redirect to successful page
+                // TODO: Redirect to successful page
             } else {
-                                FacesContext context = FacesContext.getCurrentInstance();
+                FacesContext context = FacesContext.getCurrentInstance();
                 HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
                 response.sendRedirect("error.xhtml");
 
             }
         } catch (Exception ex) {
-            //TODO: Redirect to error page
+            // TODO: Redirect to error page
         }
     }
 }
