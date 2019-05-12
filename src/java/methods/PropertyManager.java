@@ -182,6 +182,23 @@ public class PropertyManager {
 
     }
 
+    public void deleteProperty() {
+        try {
+            CachedRowSet crs = DBSingleton.getCRS();
+
+            crs.setCommand("DELETE FROM PROPERTY WHERE PROPERTY_ID = ?");
+
+            crs.setInt(1, this.property.getProperty_ID());
+            crs.execute();
+            FacesContext context = FacesContext.getCurrentInstance();
+            HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+            response.sendRedirect("viewProperties.xhtml");
+
+        } catch (Exception ex) {
+            Logger.getLogger(PropertyManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     private ArrayList<Property> generateArraylist(CachedRowSet crs) {
 
         ArrayList<Property> properties = new ArrayList<Property>();
