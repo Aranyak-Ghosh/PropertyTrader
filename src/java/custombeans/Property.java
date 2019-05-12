@@ -32,7 +32,7 @@ public class Property implements Serializable {
     }
 
     public String getStatus() {
-        String status;
+        String status=null;
         switch (available) {
         case 0:
             status = "YES";
