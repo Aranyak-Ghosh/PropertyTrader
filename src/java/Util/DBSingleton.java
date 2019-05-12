@@ -37,9 +37,8 @@ public class DBSingleton {
 
     public static CachedRowSet getCRS() throws Exception {
         if (!initialized)
-            throw new Exception("CRS instance not initialized");
-        else
-            return crs;
+            init();
+        return crs;
     }
 
 }
