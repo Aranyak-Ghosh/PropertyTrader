@@ -1,21 +1,24 @@
 package custombeans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
+import javax.faces.model.SelectItem;
 
 /**
  *
  * @author yaseenfarooqui
  */
-@ManagedBean(name = "reviews")
+@ManagedBean(name = "review")
 public class Reviews implements Serializable {
+
     private String review;
     private int rating;
     private String author;
     private int reviewID;
     private int propertyID;
 
-    public Reviews(){
+    public Reviews() {
 
     }
 
@@ -59,5 +62,14 @@ public class Reviews implements Serializable {
         this.propertyID = propertyID;
     }
 
-    
+    public ArrayList<SelectItem> getRatingList() {
+        ArrayList<SelectItem> list = new ArrayList<SelectItem>();
+        for (int i = 1; i <= 5; i++) {
+            SelectItem temp = new SelectItem();
+            temp.setLabel("" + i);
+            temp.setValue(i);
+            list.add(temp);
+        }
+        return list;
+    }
 }

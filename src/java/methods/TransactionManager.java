@@ -14,6 +14,8 @@ import javax.sql.rowset.CachedRowSet;
 import custombeans.Property;
 import custombeans.User;
 import custombeans.Transaction;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import util.DBSingleton;
 
@@ -94,7 +96,10 @@ public class TransactionManager {
                     crs.updateString("OWNED_BY", buyer);
                     crs.acceptChanges();
                 }
-                // TODO: Redirect to successful page
+                FacesContext context = FacesContext.getCurrentInstance();
+                HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+                response.sendRedirect("addReview.xhtml");
+                
             } else {
                 FacesContext context = FacesContext.getCurrentInstance();
                 HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
@@ -102,7 +107,7 @@ public class TransactionManager {
 
             }
         } catch (Exception ex) {
-            // TODO: Redirect to error page
+            Logger.getLogger(TransactionManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
