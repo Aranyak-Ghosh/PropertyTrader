@@ -174,12 +174,39 @@ public class PropertyManager {
                 this.property.setPrice(crs.getInt("PRICE"));
                 this.property.setYear(crs.getInt("ORIGINYEAR"));
                 this.property.setAvailable(crs.getInt("AVAILABLE"));
+                this.property.setProperty_ID(crs.getInt("PROPERTY_ID"));
             }
 
         } catch (Exception e) {
             Logger.getLogger(PropertyManager.class.getSimpleName()).log(Level.SEVERE, null, e);
         }
 
+    }
+
+    public void editProperty() {
+        try {
+            CachedRowSet crs = DBSingleton.getCRS();
+
+            crs.setCommand(
+                    "UPDATE PROPERTY SET TYPID=?, AREA=?,BATHROOMS=?,BEDROOMS=?,OWNED_BY=?,PRICE=?,ORIGINYEAR=? WHERE PROPERTY_ID=?");
+
+            crs.setInt(1, property.getTypeID());
+            crs.setString(2, property.getArea());
+            crs.setInt(3, property.getNumBath());
+            crs.setInt(4, property.getNumBed());
+            crs.setString(5, property.getOwner());
+            crs.setInt(6, property.getPrice());
+            crs.setInt(7, property.getYear());
+            crs.setInt(8, property.getProperty_ID());
+
+            crs.execute();
+
+            FacesContext context = FacesContext.getCurrentInstance();
+            HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+            response.sendRedirect("success.xhtml");
+        } catch (Exception e) {
+            Logger.getLogger(PropertyManager.class.getSimpleName()).log(Level.SEVERE, null, e);
+        }
     }
 
     public void deleteProperty() {
@@ -192,7 +219,7 @@ public class PropertyManager {
             crs.execute();
             FacesContext context = FacesContext.getCurrentInstance();
             HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-            response.sendRedirect("viewProperties.xhtml");
+            response.sendRedirect("success.xhtml");
 
         } catch (Exception ex) {
             Logger.getLogger(PropertyManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -215,6 +242,7 @@ public class PropertyManager {
                 temp.setPrice(crs.getInt("PRICE"));
                 temp.setYear(crs.getInt("ORIGINYEAR"));
                 temp.setAvailable(crs.getInt("AVAILABLE"));
+                temp.setProperty_ID(crs.getInt("PROPERTY_ID"));
                 properties.add(temp);
             }
         } catch (SQLException ex) {
