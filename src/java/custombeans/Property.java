@@ -1,9 +1,12 @@
-
 package custombeans;
 
 import java.awt.Image;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
+import javax.sql.rowset.CachedRowSet;
+import util.DBSingleton;
 
 /**
  *
@@ -23,7 +26,43 @@ public class Property implements Serializable {
     private String pictures; // Not so sure about this
     private int property_ID;
 
+    private String typeName;
+
     public Property() {
+    }
+
+    public String getStatus() {
+        String status;
+        switch (available) {
+        case 0:
+            status = "YES";
+            break;
+        case 1:
+            status = "NO";
+            break;
+        }
+        return status;
+    }
+
+    public String getTypeName() {
+        if (this.typeName == null || this.typeName.contentEquals("")) {
+            try {
+                CachedRowSet crs = DBSingleton.getCRS();
+                crs.setCommand("SELECT * FROM PROPERTYTYPES WHERE TYPEID=?");
+                crs.setInt(1, this.typeID);
+                crs.execute();
+                while (crs.next()) {
+                    this.typeName = crs.getString("TYPENAME");
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(Property.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 
     public int getTypeID() {

@@ -155,6 +155,33 @@ public class PropertyManager {
         return properties;
     }
 
+    public void setCurrentProperty(int propertyID) {
+        try {
+            CachedRowSet crs = DBSingleton.getCRS();
+
+            crs.setCommand("SELECT * FROM PROPERTY WHERE PROPERTY_ID = ?");
+
+            crs.setInt(1, propertyID);
+            crs.execute();
+
+            if (crs.next()) {
+                this.property.setTypeID(crs.getInt("TYPEID"));
+                this.property.setArea(crs.getString("AREA"));
+                this.property.setNumBath(crs.getInt("BATHROOMS"));
+                this.property.setNumBed(crs.getInt("BEDROOMS"));
+                this.property.setOwner(crs.getString("OWNED_BY"));
+                this.property.setPictures(crs.getString("PICTURES"));
+                this.property.setPrice(crs.getInt("PRICE"));
+                this.property.setYear(crs.getInt("ORIGINYEAR"));
+                this.property.setAvailable(crs.getInt("AVAILABLE"));
+            }
+
+        } catch (Exception e) {
+            Logger.getLogger(PropertyManager.class.getSimpleName()).log(Level.SEVERE, null, e);
+        }
+
+    }
+
     private ArrayList<Property> generateArraylist(CachedRowSet crs) {
 
         ArrayList<Property> properties = new ArrayList<Property>();

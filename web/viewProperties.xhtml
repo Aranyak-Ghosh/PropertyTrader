@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <link rel="stylesheet" href="Style/mycss.css" type="text/css" />
+</h:head>
+<h:body class="gen">
+    <center>
+        <h1 class="heading">You Can View All Your Properties Here</h1>
+        <h2> LIST OF YOUR PROPERTIES</h2>
+        <h:form>
+            <h:dataTable var='property' value="#{propertyManager.getList(auth.user.username)}" cellspacing="20"
+                styleClass="property">
+
+                <h:column>
+                    <f:facet name='header'>ID</f:facet>
+                    <h:outputText value="#{property.id}" />
+                </h:column>
+                <h:column>
+                    <f:facet name='header'>TYPE</f:facet>
+                    <h:outputText value="#{property.typeName}" />
+                </h:column>
+
+                <h:column>
+                    <f:facet name='header'>YEAR</f:facet>
+                    <h:outputText value="#{property.year}" />
+                </h:column>
+
+                <h:column>
+                    <f:facet name='header'>AREA</f:facet>
+                    <h:outputText value="#{property.area}" />
+                </h:column>
+
+                <h:column>
+                    <f:facet name='header'>NUMBER OF BEDROOMS</f:facet>
+                    <h:outputText value="#{property.numBed}" />
+                </h:column>
+
+                <h:column>
+                    <f:facet name='header'>NUMBER OF BATHROOMS</f:facet>
+                    <h:outputText value="#{property.numBath}" />
+                </h:column>
+
+                <h:column>
+                    <f:facet name='header'>PRICE</f:facet>
+                    <h:outputText value="#{property.price}" />
+                </h:column>
+
+                <h:column>
+                    <f:facet name='header'>FOR SALE</f:facet>
+                    <h:outputText value="#{cars.status}" />
+                </h:column>
+
+                <h:column>
+                    <f:facet name='header'>EDIT</f:facet>
+                    <h:commandButton value='Edit' action="editProperty"
+                        actionListener="#{propertyManager.setCurrentProperty(property.id)}" />
+                </h:column>
+
+                <h:column>
+                    <f:facet name='header'>DELETE</f:facet>
+                    <h:commandButton value='Delete' action="deleteProperty"
+                        actionListener="#{propertyManager.setCurrentProperty(property.id)}" />
+                </h:column>
+
+            </h:dataTable>
+        </h:form>
+    </center>
+</h:body>
+
+</html>
