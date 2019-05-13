@@ -89,7 +89,7 @@ public class AuthenticationProvider {
         } catch (Exception ex) {
             Logger.getLogger(AuthenticationProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return "authError.xhtml";
     }
 
     public String signUp() {
@@ -118,7 +118,7 @@ public class AuthenticationProvider {
         } catch (Exception ex) {
             Logger.getLogger(AuthenticationProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return "authError.xhtml";
     }
 
     public void logout() {

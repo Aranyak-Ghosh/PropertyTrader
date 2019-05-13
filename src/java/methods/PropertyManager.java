@@ -139,7 +139,7 @@ public class PropertyManager {
         } catch (Exception ex) {
             Logger.getLogger(PropertyManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return "error.xhtml";
     }
 
     public ArrayList<Property> getPropertybyPrice(int minprice, int maxprice) {
@@ -289,7 +289,7 @@ public class PropertyManager {
         } catch (Exception e) {
             Logger.getLogger(PropertyManager.class.getSimpleName()).log(Level.SEVERE, null, e);
         }
-        return null;
+        return "error.xhtml";
     }
 
     public String deleteProperty() {
@@ -305,7 +305,7 @@ public class PropertyManager {
         } catch (Exception ex) {
             Logger.getLogger(PropertyManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return "error.xhtml";
     }
 
     private ArrayList<Property> generateArraylist(CachedRowSet crs) {

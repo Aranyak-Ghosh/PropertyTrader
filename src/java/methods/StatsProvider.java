@@ -56,6 +56,6 @@ public class StatsProvider {
         } catch (SQLException e) {
             Logger.getLogger(StatsProvider.class.getSimpleName()).log(Level.SEVERE, null, e);
         }
-        return null;
+        return "error.xhtml";
     }
 }

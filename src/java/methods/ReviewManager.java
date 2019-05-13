@@ -76,6 +76,6 @@ public class ReviewManager {
         } catch (Exception ex) {
             Logger.getLogger(TransactionManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return "error.xhtml";
     }
 }
