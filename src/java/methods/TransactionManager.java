@@ -7,8 +7,6 @@ import java.sql.PreparedStatement;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletResponse;
 import javax.sql.rowset.CachedRowSet;
 
 import custombeans.Property;
@@ -61,7 +59,7 @@ public class TransactionManager {
         this.owner = owner;
     }
 
-    public void addTransaction() {
+    public String addTransaction() {
         try {
             Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/Project", "a", "b");
             Class.forName("org.apache.derby.jdbc.ClientDriver");
@@ -96,14 +94,10 @@ public class TransactionManager {
                     crs.updateString("OWNED_BY", buyer);
                     crs.acceptChanges();
                 }
-                FacesContext context = FacesContext.getCurrentInstance();
-                HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-                response.sendRedirect("addReview.xhtml");
-                
+                return "addReview.xhtml";
+
             } else {
-                FacesContext context = FacesContext.getCurrentInstance();
-                HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-                response.sendRedirect("error.xhtml");
+                return "error.xhtml";
 
             }
         } catch (Exception ex) {

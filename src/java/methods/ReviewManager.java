@@ -7,8 +7,6 @@ import java.sql.PreparedStatement;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletResponse;
 import javax.sql.rowset.CachedRowSet;
 
 import custombeans.Property;
@@ -42,7 +40,7 @@ public class ReviewManager {
         this.review.setPropertyID(propertyID);
     }
 
-    public void addReview() {
+    public String addReview() {
         try {
             Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/Project", "a", "b");
             Class.forName("org.apache.derby.jdbc.ClientDriver");
@@ -70,14 +68,10 @@ public class ReviewManager {
             boolean success = ps.execute();
 
             if (success) {
-                FacesContext context = FacesContext.getCurrentInstance();
-                HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-                response.sendRedirect("success.xhtml");
+                return "success.xhtml";
                 
             } else {
-                FacesContext context = FacesContext.getCurrentInstance();
-                HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-                response.sendRedirect("error.xhtml");
+return "error.xhtml";
 
             }
         } catch (Exception ex) {

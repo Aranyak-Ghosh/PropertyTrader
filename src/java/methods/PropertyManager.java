@@ -12,8 +12,6 @@ import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletResponse;
 import javax.sql.rowset.CachedRowSet;
 
 import custombeans.Property;
@@ -101,7 +99,7 @@ public class PropertyManager {
         this.property = property;
     }
 
-    public void addProperty(String username) {
+    public String addProperty(String username) {
         this.property.setOwner(username);
         try {
             Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/Project", "a", "b");
@@ -133,13 +131,9 @@ public class PropertyManager {
             boolean success = ps.execute();
 
             if (success) {
-                FacesContext context = FacesContext.getCurrentInstance();
-                HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-                response.sendRedirect("index.xhtml");
+                return "success.xhtml";
             } else {
-                FacesContext context = FacesContext.getCurrentInstance();
-                HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-                response.sendRedirect("error.xhtml");
+                return "error.xhtml";
             }
 
         } catch (Exception ex) {
@@ -272,7 +266,7 @@ public class PropertyManager {
 
     }
 
-    public void editProperty() {
+    public String editProperty() {
         try {
             CachedRowSet crs = DBSingleton.getCRS();
 
@@ -290,15 +284,13 @@ public class PropertyManager {
 
             crs.execute();
 
-            FacesContext context = FacesContext.getCurrentInstance();
-            HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-            response.sendRedirect("success.xhtml");
+            return "success.xhtml";
         } catch (Exception e) {
             Logger.getLogger(PropertyManager.class.getSimpleName()).log(Level.SEVERE, null, e);
         }
     }
 
-    public void deleteProperty() {
+    public String deleteProperty() {
         try {
             CachedRowSet crs = DBSingleton.getCRS();
 
@@ -306,9 +298,7 @@ public class PropertyManager {
 
             crs.setInt(1, this.property.getProperty_ID());
             crs.execute();
-            FacesContext context = FacesContext.getCurrentInstance();
-            HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-            response.sendRedirect("success.xhtml");
+            return "success.xhtml";
 
         } catch (Exception ex) {
             Logger.getLogger(PropertyManager.class.getName()).log(Level.SEVERE, null, ex);

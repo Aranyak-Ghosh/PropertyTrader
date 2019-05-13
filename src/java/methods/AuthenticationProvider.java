@@ -14,8 +14,6 @@ import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletResponse;
 import javax.sql.rowset.CachedRowSet;
 
 /**
@@ -64,7 +62,7 @@ public class AuthenticationProvider {
         return null;
     }
 
-    public void login() throws IOException {
+    public String login() throws IOException {
         try {
             CachedRowSet crs = DBSingleton.getCRS();
             crs.setCommand("SELECT * FROM USERS WHERE USERNAME = ?");
@@ -79,13 +77,9 @@ public class AuthenticationProvider {
                     if (pass.contentEquals(pass_hash)) {
                         this.user.setLoggedIn(true);
                         this.user.setName(crs.getString("FULL_NAME"));
-                        FacesContext context = FacesContext.getCurrentInstance();
-                        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-                        response.sendRedirect("home.xhtml");
+                        return "home.xhtml";
                     } else {
-                        FacesContext context = FacesContext.getCurrentInstance();
-                        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-                        response.sendRedirect("authError.xhtml");
+                        return "authError.xhtml";
                     }
 
                 }
@@ -97,7 +91,7 @@ public class AuthenticationProvider {
         }
     }
 
-    public void signUp() {
+    public String signUp() {
         try {
             Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/Project", "a", "b");
             Class.forName("org.apache.derby.jdbc.ClientDriver");
@@ -116,20 +110,16 @@ public class AuthenticationProvider {
             boolean success = ps.execute();
 
             if (success) {
-                FacesContext context = FacesContext.getCurrentInstance();
-                HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-                response.sendRedirect("accountCreated.xhtml");
+                return "accountCreated.xhtml";
             } else {
-                FacesContext context = FacesContext.getCurrentInstance();
-                HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-                response.sendRedirect("authError.xhtml");
+                return "authError.xhtml";
             }
         } catch (Exception ex) {
             Logger.getLogger(AuthenticationProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void logout(){
+    public void logout() {
         this.user.setLoggedIn(false);
     }
 
