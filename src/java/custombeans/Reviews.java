@@ -17,7 +17,7 @@ public class Reviews implements Serializable {
     private String author;
     private int reviewID;
     private int propertyID;
-
+  
     public Reviews() {
 
     }

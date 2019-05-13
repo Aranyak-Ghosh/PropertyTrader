@@ -13,7 +13,8 @@
             <br />
             <center>
                 <h:commandButton value="Go Back" action="searchResult" />
-                <h:commandButton value="Purchase" action="#{transactionManager.addTransaction()}" />
+                <h:commandButton value="Purchase" action="#{transactionManager.addTransaction()}"
+                    actionListener="#{reviewManager.init(transactionManager.propertyID,transactionManager.buyer)}" />
             </center>
         </center>
     </h:form>
