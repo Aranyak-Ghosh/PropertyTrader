@@ -1,6 +1,5 @@
 package methods;
 
-import util.DBSingleton;
 import custombeans.User;
 import java.io.IOException;
 import java.security.MessageDigest;
@@ -15,6 +14,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.sql.rowset.CachedRowSet;
+import javax.sql.rowset.RowSetProvider;
+import util.Singleton;
 
 /**
  *
@@ -27,6 +28,8 @@ public class AuthenticationProvider {
 
     @ManagedProperty(value = "#{user}")
     private User user;
+
+    private CachedRowSet crs;
 
     public User getUser() {
         return user;
@@ -41,7 +44,13 @@ public class AuthenticationProvider {
      */
     public AuthenticationProvider() {
         try {
-            DBSingleton.init();
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            crs = RowSetProvider.newFactory().createCachedRowSet();
+            crs.setUrl(Singleton.getInstance().getDB());
+            crs.setUsername(Singleton.getInstance().getUser());
+            crs.setPassword(Singleton.getInstance().getPasswd());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AuthenticationProvider.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(AuthenticationProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -64,7 +73,7 @@ public class AuthenticationProvider {
 
     public String login() throws IOException {
         try {
-            CachedRowSet crs = DBSingleton.getCRS();
+            
             crs.setCommand("SELECT * FROM USERS WHERE USERNAME = ?");
 
             crs.setString(1, this.user.getUsername());

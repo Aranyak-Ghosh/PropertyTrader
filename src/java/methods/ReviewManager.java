@@ -13,10 +13,12 @@ import custombeans.Property;
 import custombeans.Reviews;
 import custombeans.User;
 import custombeans.Transaction;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.sql.rowset.RowSetProvider;
 
-import util.DBSingleton;
+import util.Singleton;
 
 @ManagedBean(name = "reviewManager")
 public class ReviewManager {
@@ -24,7 +26,20 @@ public class ReviewManager {
     @ManagedProperty(value = "#{review}")
     private Reviews review;
 
+    private CachedRowSet crs;
+    
     public ReviewManager() {
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            crs = RowSetProvider.newFactory().createCachedRowSet();
+            crs.setUrl(Singleton.getInstance().getDB());
+            crs.setUsername(Singleton.getInstance().getUser());
+            crs.setPassword(Singleton.getInstance().getPasswd());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ReviewManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ReviewManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public Reviews getReview() {
@@ -49,8 +64,7 @@ public class ReviewManager {
             PreparedStatement ps = con.prepareStatement(query);
 
             int id = 0;
-            CachedRowSet crs = DBSingleton.getCRS();
-
+            
             crs.setCommand("SELECT COUNT(*) AS NUMROWS FROM REVIEWS");
             crs.execute();
 

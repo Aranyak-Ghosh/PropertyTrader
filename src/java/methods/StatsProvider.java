@@ -18,7 +18,7 @@ import custombeans.Transaction;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import util.DBSingleton;
+import util.Singleton;
 
 @ManagedBean(name = "graphHelper")
 public class StatsProvider {
@@ -28,16 +28,16 @@ public class StatsProvider {
             String output = "[['AREA','PROPERTIES'],";
 
             CachedRowSet crs = RowSetProvider.newFactory().createCachedRowSet();
-            crs.setUrl("jdbc:derby://localhost:1527/Project");
-            crs.setUsername("a");
-            crs.setPassword("b");
+            crs.setUrl(Singleton.getInstance().getDB());
+            crs.setUsername(Singleton.getInstance().getUser());
+            crs.setPassword(Singleton.getInstance().getPasswd());
             crs.setCommand("SELECT AREA FROM PROPERTY");
             crs.execute();
 
             CachedRowSet crs2 = RowSetProvider.newFactory().createCachedRowSet();
-            crs2.setUrl("jdbc:derby://localhost:1527/Project");
-            crs2.setUsername("a");
-            crs2.setPassword("b");
+            crs2.setUrl(Singleton.getInstance().getDB());
+            crs2.setUsername(Singleton.getInstance().getUser());
+            crs2.setPassword(Singleton.getInstance().getPasswd());
 
             while (crs.next()) {
                 String area = crs.getString("AREA");

@@ -2,11 +2,13 @@ package custombeans;
 
 import java.awt.Image;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.sql.rowset.CachedRowSet;
-import util.DBSingleton;
+import javax.sql.rowset.RowSetProvider;
+import util.Singleton;
 
 /**
  *
@@ -28,11 +30,24 @@ public class Property implements Serializable {
 
     private String typeName;
 
+    private CachedRowSet crs;
+
     public Property() {
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            crs = RowSetProvider.newFactory().createCachedRowSet();
+            crs.setUrl(Singleton.getInstance().getDB());
+            crs.setUsername(Singleton.getInstance().getUser());
+            crs.setPassword(Singleton.getInstance().getPasswd());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Property.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Property.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public String getStatus() {
-        String status=null;
+        String status = null;
         switch (available) {
         case 0:
             status = "YES";
@@ -47,7 +62,7 @@ public class Property implements Serializable {
     public String getTypeName() {
         if (this.typeName == null || this.typeName.contentEquals("")) {
             try {
-                CachedRowSet crs = DBSingleton.getCRS();
+
                 crs.setCommand("SELECT * FROM PROPERTYTYPES WHERE TYPEID=?");
                 crs.setInt(1, this.typeID);
                 crs.execute();

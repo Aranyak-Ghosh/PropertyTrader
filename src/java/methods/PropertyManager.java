@@ -17,8 +17,9 @@ import javax.sql.rowset.CachedRowSet;
 import custombeans.Property;
 
 import custombeans.User;
+import javax.sql.rowset.RowSetProvider;
 
-import util.DBSingleton;
+import util.Singleton;
 
 /**
  *
@@ -80,7 +81,20 @@ public class PropertyManager {
     @ManagedProperty(value = "#{query}")
     private SearchParam query;
 
+    CachedRowSet crs;
+
     public PropertyManager() {
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            crs = RowSetProvider.newFactory().createCachedRowSet();
+            crs.setUrl(Singleton.getInstance().getDB());
+            crs.setUsername(Singleton.getInstance().getUser());
+            crs.setPassword(Singleton.getInstance().getPasswd());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PropertyManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(PropertyManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public User getUser() {
@@ -108,7 +122,6 @@ public class PropertyManager {
             PreparedStatement ps = con.prepareStatement(query);
 
             int id = 0;
-            CachedRowSet crs = DBSingleton.getCRS();
             crs.setCommand("SELECT COUNT(*) AS NUMROWS FROM PROPERTY");
             crs.execute();
 
@@ -145,7 +158,6 @@ public class PropertyManager {
     public ArrayList<Property> getPropertybyPrice(int minprice, int maxprice) {
         ArrayList<Property> properties = null;
         try {
-            CachedRowSet crs = DBSingleton.getCRS();
             crs.setCommand("SELECT * FROM PROPERTY WHERE PRICE>? AND PRICE<? AND AVAILABLE = 1");
             crs.setInt(1, minprice);
             crs.setInt(2, maxprice);
@@ -163,8 +175,6 @@ public class PropertyManager {
         ArrayList<Property> properties = null;
 
         try {
-            CachedRowSet crs = DBSingleton.getCRS();
-
             crs.setCommand("SELECT * FROM PROPERTY WHERE AREA LIKE ? AND AVAILABLE = 1");
 
             crs.setString(1, "%" + area + "%");
@@ -182,8 +192,6 @@ public class PropertyManager {
         ArrayList<Property> properties = null;
 
         try {
-            CachedRowSet crs = DBSingleton.getCRS();
-
             crs.setCommand("SELECT * FROM PROPERTY WHERE TYPEID = ? AND AVAILABLE = 1");
 
             crs.setInt(1, typeID);
@@ -201,8 +209,6 @@ public class PropertyManager {
         ArrayList<Property> properties = null;
 
         try {
-            CachedRowSet crs = DBSingleton.getCRS();
-
             crs.setCommand("SELECT * FROM PROPERTY WHERE OWNED_BY=?");
 
             crs.setString(1, owner);
@@ -220,8 +226,6 @@ public class PropertyManager {
         ArrayList<Property> properties = null;
 
         try {
-            CachedRowSet crs = DBSingleton.getCRS();
-
             crs.setCommand(
                     "SELECT * FROM PROPERTY WHERE TYPEID = ? AND AREA LIKE ? AND PRICE>? AND PRICE<? AND AVAILABLE = 1");
 
@@ -241,8 +245,6 @@ public class PropertyManager {
 
     public void setCurrentProperty(int propertyID) {
         try {
-            CachedRowSet crs = DBSingleton.getCRS();
-
             crs.setCommand("SELECT * FROM PROPERTY WHERE PROPERTY_ID = ?");
 
             crs.setInt(1, propertyID);
@@ -269,7 +271,6 @@ public class PropertyManager {
 
     public String editProperty() {
         try {
-            CachedRowSet crs = DBSingleton.getCRS();
 
             crs.setCommand(
                     "UPDATE PROPERTY SET TYPID=?, AREA=?,BATHROOMS=?,BEDROOMS=?,OWNED_BY=?,PRICE=?,ORIGINYEAR=? WHERE PROPERTY_ID=?");
@@ -294,8 +295,6 @@ public class PropertyManager {
 
     public String deleteProperty() {
         try {
-            CachedRowSet crs = DBSingleton.getCRS();
-
             crs.setCommand("DELETE FROM PROPERTY WHERE PROPERTY_ID = ?");
 
             crs.setInt(1, this.property.getProperty_ID());

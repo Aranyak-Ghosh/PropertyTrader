@@ -12,10 +12,12 @@ import javax.sql.rowset.CachedRowSet;
 import custombeans.Property;
 import custombeans.User;
 import custombeans.Transaction;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.sql.rowset.RowSetProvider;
 
-import util.DBSingleton;
+import util.Singleton;
 
 @ManagedBean(name = "transactionManager")
 public class TransactionManager {
@@ -26,7 +28,20 @@ public class TransactionManager {
 
     private String buyer;
 
+    private CachedRowSet crs;
+
     public TransactionManager() {
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            crs = RowSetProvider.newFactory().createCachedRowSet();
+            crs.setUrl(Singleton.getInstance().getDB());
+            crs.setUsername(Singleton.getInstance().getUser());
+            crs.setPassword(Singleton.getInstance().getPasswd());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TransactionManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TransactionManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public int getPropertyID() {
@@ -68,7 +83,6 @@ public class TransactionManager {
             PreparedStatement ps = con.prepareStatement(query);
 
             int id = 0;
-            CachedRowSet crs = DBSingleton.getCRS();
 
             crs.setCommand("SELECT COUNT(*) AS NUMROWS FROM TRANSACTIONS");
             crs.execute();
