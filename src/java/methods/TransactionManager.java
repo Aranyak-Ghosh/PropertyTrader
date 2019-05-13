@@ -66,7 +66,7 @@ public class TransactionManager {
             Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/Project", "a", "b");
             Class.forName("org.apache.derby.jdbc.ClientDriver");
 
-            String query = "INSERT INTO TRANSACTIONS (PROPERTY_ID,TRANSACTION_ID,BUYER_NAME,SELLER_NAME) VALUES (????)";
+            String query = "INSERT INTO TRANSACTIONS (PROPERTY_ID,TRANSACTION_ID,BUYER_NAME,SELLER_NAME) VALUES (?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(query);
 
             int id = 0;
