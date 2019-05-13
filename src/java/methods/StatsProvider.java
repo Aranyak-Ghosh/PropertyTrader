@@ -44,8 +44,9 @@ public class StatsProvider {
                 crs2.setCommand("SELECT COUNT(*) AS NUMPROPERTY FROM PROPERTY WHERE AREA = " + area);
                 crs2.execute();
                 int num = 0;
-                if (crs2.next())
+                if (crs2.next()) {
                     num = crs2.getInt("NUMPROPERTY");
+                }
                 output = output + "['" + area + "''," + num + "],";
 
             }
@@ -55,5 +56,6 @@ public class StatsProvider {
         } catch (SQLException e) {
             Logger.getLogger(StatsProvider.class.getSimpleName()).log(Level.SEVERE, null, e);
         }
+        return null;
     }
 }

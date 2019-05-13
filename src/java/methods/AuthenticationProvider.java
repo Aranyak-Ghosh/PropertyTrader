@@ -89,6 +89,7 @@ public class AuthenticationProvider {
         } catch (Exception ex) {
             Logger.getLogger(AuthenticationProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
     }
 
     public String signUp() {
@@ -117,6 +118,7 @@ public class AuthenticationProvider {
         } catch (Exception ex) {
             Logger.getLogger(AuthenticationProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
     }
 
     public void logout() {

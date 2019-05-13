@@ -35,7 +35,7 @@ public class ReviewManager {
         this.review = review;
     }
 
-    public void init(int propertyID, String Author){
+    public void init(int propertyID, String Author) {
         this.review.setAuthor(Author);
         this.review.setPropertyID(propertyID);
     }
@@ -58,24 +58,24 @@ public class ReviewManager {
                 id = crs.getInt("NUMROWS");
             }
 
-            ps.setString(1,review.getReview());
+            ps.setString(1, review.getReview());
             ps.setInt(2, review.getPropertyID());
-            ps.setInt(3,review.getRating());
+            ps.setInt(3, review.getRating());
             ps.setString(4, review.getAuthor());
             ps.setInt(5, id);
-            
 
             boolean success = ps.execute();
 
             if (success) {
                 return "success.xhtml";
-                
+
             } else {
-return "error.xhtml";
+                return "error.xhtml";
 
             }
         } catch (Exception ex) {
             Logger.getLogger(TransactionManager.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
     }
 }
