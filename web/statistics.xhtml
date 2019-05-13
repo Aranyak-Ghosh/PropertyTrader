@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+  xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+  <title>Stats</title>
+  <link rel="stylesheet" href="Style/mycss.css" type="text/css" />
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load("current", { packages: ["corechart", "bar"] });
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable(#{ graphHelper.getAreaProperties });
+
+      var options = {
+        chart: {
+          title: 'No. of Properties per area',
+          is3D: true,
+        },
+        bars: 'horizontal'
+      };
+
+      var chart = new google.visualization.PieChart(document.getElementById('barchart'));
+      chart.draw(data, options);
+    }
+  </script>
+</h:head>
+<h:body class="gen">
+  <center>
+    <h1 class="heading">View Statistics</h1>
+  </center>
+
+  <br />
+  <center>
+    <div id="barchart" style="width: 900px; height: 500px;"></div>
+  </center>
+</h:body>
+
+</html>
