@@ -11,7 +11,12 @@
     google.charts.load("current", { packages: ["corechart", "bar"] });
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
-      var data = google.visualization.arrayToDataTable(#{ graphHelper.getAreaProperties() });
+
+      var dataString = #{ graphHelper.getAreaProperties() };
+      console.log(dataString);
+      // var temp = JSON.parse(dataString);
+
+      var data = google.visualization.arrayToDataTable(dataString);
 
       var options = {
         chart: {
@@ -21,7 +26,7 @@
         bars: 'horizontal'
       };
 
-      var chart = new google.visualization.PieChart(document.getElementById('barchart'));
+      var chart = new google.visualization.BarChart(document.getElementById('barchart'));
       chart.draw(data, options);
     }
   </script>

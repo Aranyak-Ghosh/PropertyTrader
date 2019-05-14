@@ -26,13 +26,13 @@ public class StatsProvider {
 
     public String getAreaProperties() {
         try {
-            String output = "[['AREA','PROPERTIES'],";
+            String output = "[['AREA','PROPERTIES']";
 
             CachedRowSet crs = RowSetProvider.newFactory().createCachedRowSet();
             crs.setUrl(Singleton.getInstance().getDB());
             crs.setUsername(Singleton.getInstance().getUser());
             crs.setPassword(Singleton.getInstance().getPasswd());
-            crs.setCommand("SELECT AREA FROM PROPERTY");
+            crs.setCommand("SELECT DISTINCT AREA FROM PROPERTY");
             crs.execute();
 
             CachedRowSet crs2 = RowSetProvider.newFactory().createCachedRowSet();
@@ -42,13 +42,14 @@ public class StatsProvider {
 
             while (crs.next()) {
                 String area = crs.getString("AREA");
-                crs2.setCommand("SELECT COUNT(*) AS NUMPROPERTY FROM PROPERTY WHERE AREA = " + area);
+                crs2.setCommand("SELECT COUNT(*) AS NUMPROPERTY FROM PROPERTY WHERE AREA =? ");
+                crs2.setString(1, area);
                 crs2.execute();
                 int num = 0;
                 if (crs2.next()) {
                     num = crs2.getInt("NUMPROPERTY");
                 }
-                output = output + "['" + area + "''," + num + "],";
+                output = output + ",['" + area + "'," + num + "]";
 
             }
             output = output + "]";

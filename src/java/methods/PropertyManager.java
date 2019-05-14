@@ -117,9 +117,9 @@ public class PropertyManager {
             PreparedStatement ps2 = con.prepareStatement("SELECT COUNT(*) AS NUMROWS FROM PROPERTY");
             ResultSet rs = ps2.executeQuery();
 
-            if (rs.first()) {
-                id = rs.getInt("NUMROWS");
-            }
+            rs.next();
+            id = rs.getInt("NUMROWS");
+
             this.property.setProperty_ID(id);
 
             ps.setInt(1, property.getTypeID());

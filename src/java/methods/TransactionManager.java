@@ -106,6 +106,7 @@ public class TransactionManager {
             if (crs.next()) {
                 crs.updateInt("AVAILABLE", 0);
                 crs.updateString("OWNED_BY", buyer);
+                crs.updateRow();
                 crs.acceptChanges();
             }
             return "addReview.xhtml";
