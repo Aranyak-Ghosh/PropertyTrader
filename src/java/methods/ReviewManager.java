@@ -18,16 +18,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.rowset.RowSetProvider;
 
-import util.Singleton;
+import util2.Singleton;
 
 @ManagedBean(name = "reviewManager")
+@SessionScoped
 public class ReviewManager {
 
     @ManagedProperty(value = "#{review}")
     private Reviews review;
 
     private CachedRowSet crs;
-    
+
     public ReviewManager() {
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
@@ -64,7 +65,7 @@ public class ReviewManager {
             PreparedStatement ps = con.prepareStatement(query);
 
             int id = 0;
-            
+
             crs.setCommand("SELECT COUNT(*) AS NUMROWS FROM REVIEWS");
             crs.execute();
 
@@ -80,13 +81,8 @@ public class ReviewManager {
 
             boolean success = ps.execute();
 
-            if (success) {
-                return "success.xhtml";
+            return "success.xhtml";
 
-            } else {
-                return "error.xhtml";
-
-            }
         } catch (Exception ex) {
             Logger.getLogger(TransactionManager.class.getName()).log(Level.SEVERE, null, ex);
         }

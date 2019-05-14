@@ -15,7 +15,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetProvider;
-import util.Singleton;
+import util2.Singleton;
 
 /**
  *
@@ -44,6 +44,7 @@ public class AuthenticationProvider {
      */
     public AuthenticationProvider() {
         try {
+            new Singleton();
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             crs = RowSetProvider.newFactory().createCachedRowSet();
             crs.setUrl(Singleton.getInstance().getDB());
@@ -53,6 +54,8 @@ public class AuthenticationProvider {
             Logger.getLogger(AuthenticationProvider.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(AuthenticationProvider.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+
         }
     }
 
@@ -73,7 +76,7 @@ public class AuthenticationProvider {
 
     public String login() throws IOException {
         try {
-            
+
             crs.setCommand("SELECT * FROM USERS WHERE USERNAME = ?");
 
             crs.setString(1, this.user.getUsername());
@@ -119,11 +122,7 @@ public class AuthenticationProvider {
 
             boolean success = ps.execute();
 
-            if (success) {
-                return "accountCreated.xhtml";
-            } else {
-                return "authError.xhtml";
-            }
+            return "accountCreated.xhtml";
         } catch (Exception ex) {
             Logger.getLogger(AuthenticationProvider.class.getName()).log(Level.SEVERE, null, ex);
         }

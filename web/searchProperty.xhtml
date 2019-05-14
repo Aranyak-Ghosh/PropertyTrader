@@ -23,21 +23,21 @@
                     <tr>
                         <td><b>Price in Range</b></td>
                         <td>
-                            <h:inputText id="min" value="#{propertyManager.query.minprice}" />
+                            <h:inputText id="min" value="#{propertyManager.minprice}" />
                             AND
-                            <h:inputText id="max" value="#{propertyManager.query.maxprice}" />
+                            <h:inputText id="max" value="#{propertyManager.maxprice}" />
                         </td>
                     </tr>
                     <tr>
                         <td><b>Area</b></td>
                         <td>
-                            <h:inputText id="area" value="#{propertyManager.query.area}" />
+                            <h:inputText id="area" value="#{propertyManager.area}" />
                         </td>
                     </tr>
                     <tr>
                         <td><b>Type</b></td>
                         <td>
-                            <h:selectOneMenu id="type" value="#{propertyManager.query.typeID}">
+                            <h:selectOneMenu id="type" value="#{propertyManager.typeID}">
                                 <f:selectItems value="#{propertyType.list}" />
                             </h:selectOneMenu>
                         </td>

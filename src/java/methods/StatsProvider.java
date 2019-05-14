@@ -18,9 +18,10 @@ import custombeans.Transaction;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import util.Singleton;
+import util2.Singleton;
 
 @ManagedBean(name = "graphHelper")
+@SessionScoped
 public class StatsProvider {
 
     public String getAreaProperties() {

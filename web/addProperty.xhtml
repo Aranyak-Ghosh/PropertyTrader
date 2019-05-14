@@ -28,7 +28,7 @@
                         <td><b>Type* </b></td>
                         <td>
                             <h:selectOneMenu id="type" value="#{propertyManager.property.typeID}">
-                                <f:selectItems value="#{propertyType.list}" />
+                                <f:selectItems value="#{propertyType.getList()}" />
                             </h:selectOneMenu>
                             <h:message for="type" />
                         </td>

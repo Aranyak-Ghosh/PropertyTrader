@@ -8,13 +8,15 @@ import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetProvider;
-import util.Singleton;
+import util2.Singleton;
+import javax.faces.bean.SessionScoped;
 
 /**
  *
  * @author yaseenfarooqui
  */
 @ManagedBean(name = "property")
+@SessionScoped
 public class Property implements Serializable {
 
     private int typeID;

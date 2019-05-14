@@ -16,7 +16,7 @@
 
                 <h:column>
                     <f:facet name='header'>ID</f:facet>
-                    <h:outputText value="#{property.id}" />
+                    <h:outputText value="#{property.property_ID}" />
                 </h:column>
                 <h:column>
                     <f:facet name='header'>OWNER</f:facet>
@@ -60,7 +60,7 @@
                 <h:column>
                     <f:facet name='header'>Buy</f:facet>
                     <h:commandButton value='Buy Property' action="confirmPurchase"
-                        actionListener="#{transactionManager.init(property.id,auth.user.username,property.owner)}" />
+                        actionListener="#{transactionManager.init(property.property_ID,auth.user.username,property.owner)}" />
                 </h:column>
 
             </h:dataTable>

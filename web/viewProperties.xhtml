@@ -16,7 +16,7 @@
 
                 <h:column>
                     <f:facet name='header'>ID</f:facet>
-                    <h:outputText value="#{property.id}" />
+                    <h:outputText value="#{property.property_ID}" />
                 </h:column>
                 <h:column>
                     <f:facet name='header'>OWNER</f:facet>
@@ -60,16 +60,19 @@
                 <h:column>
                     <f:facet name='header'>EDIT</f:facet>
                     <h:commandButton value='Edit' action="editProperty"
-                        actionListener="#{propertyManager.setCurrentProperty(property.id)}" />
+                        actionListener="#{propertyManager.setCurrentProperty(property.property_ID)}" />
                 </h:column>
 
                 <h:column>
                     <f:facet name='header'>DELETE</f:facet>
                     <h:commandButton value='Delete' action="deleteProperty"
-                        actionListener="#{propertyManager.setCurrentProperty(property.id)}" />
+                        actionListener="#{propertyManager.setCurrentProperty(property.property_ID)}" />
                 </h:column>
 
             </h:dataTable>
+            <center>
+                <h:commandButton value="Back to Home" action="home" />
+            </center>
         </h:form>
     </center>
 </h:body>

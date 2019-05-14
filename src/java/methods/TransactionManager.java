@@ -17,9 +17,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.rowset.RowSetProvider;
 
-import util.Singleton;
+import util2.Singleton;
 
 @ManagedBean(name = "transactionManager")
+@SessionScoped
 public class TransactionManager {
 
     private int propertyID;
@@ -98,22 +99,17 @@ public class TransactionManager {
 
             boolean success = ps.execute();
 
-            if (success) {
-                String propertyQuery = "SELECT * FROM PROPERTY WHERE PROPERTY_ID = ?";
-                crs.setCommand(propertyQuery);
-                crs.setInt(1, propertyID);
-                crs.execute();
-                if (crs.next()) {
-                    crs.updateInt("AVAILABLE", 0);
-                    crs.updateString("OWNED_BY", buyer);
-                    crs.acceptChanges();
-                }
-                return "addReview.xhtml";
-
-            } else {
-                return "error.xhtml";
-
+            String propertyQuery = "SELECT * FROM PROPERTY WHERE PROPERTY_ID = ?";
+            crs.setCommand(propertyQuery);
+            crs.setInt(1, propertyID);
+            crs.execute();
+            if (crs.next()) {
+                crs.updateInt("AVAILABLE", 0);
+                crs.updateString("OWNED_BY", buyer);
+                crs.acceptChanges();
             }
+            return "addReview.xhtml";
+
         } catch (Exception ex) {
             Logger.getLogger(TransactionManager.class.getName()).log(Level.SEVERE, null, ex);
         }

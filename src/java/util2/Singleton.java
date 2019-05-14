@@ -1,24 +1,26 @@
-package util;
+package util2;
 
 /**
  *
  * @author gbarlas
  */
 public class Singleton {
-    private static Singleton instance=null;
-    private String DB;
-    private String user;
-    private String passwd;
 
-    public Singleton() throws Exception
-    {
-        
+    private static Singleton instance = null;
+    private String DB = "jdbc:derby://localhost:1527/Project";
+    private String user = "a";
+    private String passwd = "b";
+
+    public Singleton() throws Exception {
+
         System.out.println("Singleton constructor called");
-        if(instance==null)
-            instance=this;
-        else
+        if (instance == null) {
+            instance = this;
+        } else {
             throw new Exception("Only one Singleton is allowed");
+        }
     }
+
     public static Singleton getInstance() {
         return instance;
     }
@@ -50,6 +52,5 @@ public class Singleton {
     public void setPasswd(String passwd) {
         this.passwd = passwd;
     }
-    
-            
+
 }

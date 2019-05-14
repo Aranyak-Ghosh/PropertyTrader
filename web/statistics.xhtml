@@ -11,7 +11,7 @@
     google.charts.load("current", { packages: ["corechart", "bar"] });
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
-      var data = google.visualization.arrayToDataTable(#{ graphHelper.getAreaProperties });
+      var data = google.visualization.arrayToDataTable(#{ graphHelper.getAreaProperties() });
 
       var options = {
         chart: {

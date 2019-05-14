@@ -4,12 +4,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.model.SelectItem;
+import javax.faces.bean.SessionScoped;
 
 /**
  *
  * @author yaseenfarooqui
  */
 @ManagedBean(name = "review")
+@SessionScoped
 public class Reviews implements Serializable {
 
     private String review;

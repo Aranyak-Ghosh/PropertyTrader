@@ -2,12 +2,14 @@ package custombeans;
 
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 /**
  *
  * @author yaseenfarooqui
  */
 @ManagedBean(name = "transaction")
+@SessionScoped
 public class Transaction implements Serializable {
 
     private int propertyID;

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -19,13 +20,14 @@ import custombeans.Property;
 import custombeans.User;
 import javax.sql.rowset.RowSetProvider;
 
-import util.Singleton;
+import util2.Singleton;
 
 /**
  *
  * @author yaseenfarooqui
  */
 @ManagedBean(name = "propertyManager")
+@SessionScoped
 public class PropertyManager {
 
     @ManagedProperty(value = "#{user}")
@@ -34,52 +36,10 @@ public class PropertyManager {
     @ManagedProperty(value = "#{property}")
     private Property property;
 
-    public class SearchParam {
-
-        private int minprice;
-        private int maxprice;
-        private String area;
-        private int typeID;
-
-        public SearchParam() {
-        }
-
-        public int getMinprice() {
-            return minprice;
-        }
-
-        public void setMinprice(int minprice) {
-            this.minprice = minprice;
-        }
-
-        public int getMaxprice() {
-            return maxprice;
-        }
-
-        public void setMaxprice(int maxprice) {
-            this.maxprice = maxprice;
-        }
-
-        public String getArea() {
-            return area;
-        }
-
-        public void setArea(String area) {
-            this.area = area;
-        }
-
-        public int getTypeID() {
-            return typeID;
-        }
-
-        public void setTypeID(int typeID) {
-            this.typeID = typeID;
-        }
-
-    };
-
-    @ManagedProperty(value = "#{query}")
-    private SearchParam query;
+    private int minprice;
+    private int maxprice;
+    private String area;
+    private int typeID;
 
     CachedRowSet crs;
 
@@ -95,6 +55,38 @@ public class PropertyManager {
         } catch (SQLException ex) {
             Logger.getLogger(PropertyManager.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public int getMinprice() {
+        return minprice;
+    }
+
+    public void setMinprice(int minprice) {
+        this.minprice = minprice;
+    }
+
+    public int getMaxprice() {
+        return maxprice;
+    }
+
+    public void setMaxprice(int maxprice) {
+        this.maxprice = maxprice;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public int getTypeID() {
+        return typeID;
+    }
+
+    public void setTypeID(int typeID) {
+        this.typeID = typeID;
     }
 
     public User getUser() {
@@ -122,11 +114,11 @@ public class PropertyManager {
             PreparedStatement ps = con.prepareStatement(query);
 
             int id = 0;
-            crs.setCommand("SELECT COUNT(*) AS NUMROWS FROM PROPERTY");
-            crs.execute();
+            PreparedStatement ps2 = con.prepareStatement("SELECT COUNT(*) AS NUMROWS FROM PROPERTY");
+            ResultSet rs = ps2.executeQuery();
 
-            if (crs.next()) {
-                id = crs.getInt("NUMROWS");
+            if (rs.first()) {
+                id = rs.getInt("NUMROWS");
             }
             this.property.setProperty_ID(id);
 
@@ -143,11 +135,7 @@ public class PropertyManager {
 
             boolean success = ps.execute();
 
-            if (success) {
-                return "success.xhtml";
-            } else {
-                return "error.xhtml";
-            }
+            return "success.xhtml";
 
         } catch (Exception ex) {
             Logger.getLogger(PropertyManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -229,10 +217,10 @@ public class PropertyManager {
             crs.setCommand(
                     "SELECT * FROM PROPERTY WHERE TYPEID = ? AND AREA LIKE ? AND PRICE>? AND PRICE<? AND AVAILABLE = 1");
 
-            crs.setInt(1, this.query.typeID);
-            crs.setString(2, "%" + this.query.area + "%");
-            crs.setInt(3, this.query.minprice);
-            crs.setInt(4, this.query.maxprice);
+            crs.setInt(1, this.typeID);
+            crs.setString(2, "%" + this.area + "%");
+            crs.setInt(3, this.minprice);
+            crs.setInt(4, this.maxprice);
             crs.execute();
 
             properties = generateArraylist(crs);
@@ -312,19 +300,20 @@ public class PropertyManager {
         ArrayList<Property> properties = new ArrayList<Property>();
 
         try {
-            while (crs.next()) {
-                Property temp = new Property();
-                temp.setTypeID(crs.getInt("TYPEID"));
-                temp.setArea(crs.getString("AREA"));
-                temp.setNumBath(crs.getInt("BATHROOMS"));
-                temp.setNumBed(crs.getInt("BEDROOMS"));
-                temp.setOwner(crs.getString("OWNED_BY"));
-                temp.setPictures(crs.getString("PICTURES"));
-                temp.setPrice(crs.getInt("PRICE"));
-                temp.setYear(crs.getInt("ORIGINYEAR"));
-                temp.setAvailable(crs.getInt("AVAILABLE"));
-                temp.setProperty_ID(crs.getInt("PROPERTY_ID"));
-                properties.add(temp);
+            if (crs.size() > 0) {
+                while (crs.next()) {
+                    Property temp = new Property();
+                    temp.setTypeID(crs.getInt("TYPEID"));
+                    temp.setArea(crs.getString("AREA"));
+                    temp.setNumBath(crs.getInt("BATHROOMS"));
+                    temp.setNumBed(crs.getInt("BEDROOMS"));
+                    temp.setOwner(crs.getString("OWNED_BY"));
+                    temp.setPrice(crs.getInt("PRICE"));
+                    temp.setYear(crs.getInt("ORIGINYEAR"));
+                    temp.setAvailable(crs.getInt("AVAILABLE"));
+                    temp.setProperty_ID(crs.getInt("PROPERTY_ID"));
+                    properties.add(temp);
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(PropertyManager.class.getName()).log(Level.SEVERE, null, ex);

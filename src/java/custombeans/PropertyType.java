@@ -7,35 +7,39 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetProvider;
-import util.Singleton;
+import util2.Singleton;
 
 /**
  *
  * @author yaseenfarooqui
  */
 @ManagedBean(name = "propertyType")
+@SessionScoped
 public class PropertyType implements Serializable {
 
     private int typeID;
     private String typeName;
 
-    private CachedRowSet crs;
+    private ArrayList<SelectItem> list;
 
     public PropertyType() {
-        try {
-            Class.forName("org.apache.derby.jdbc.ClientDriver");
-            crs = RowSetProvider.newFactory().createCachedRowSet();
-            crs.setUrl(Singleton.getInstance().getDB());
-            crs.setUsername(Singleton.getInstance().getUser());
-            crs.setPassword(Singleton.getInstance().getPasswd());
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Property.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(Property.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        list = new ArrayList<SelectItem>();
+        SelectItem bunglow = new SelectItem();
+        SelectItem apartment = new SelectItem();
+        SelectItem plot = new SelectItem();
+        bunglow.setLabel("Bunglow");
+        bunglow.setValue(1);
+        apartment.setLabel("Apartment");
+        apartment.setValue(2);
+        plot.setLabel("Plot");
+        plot.setValue(3);
+        list.add(bunglow);
+        list.add(apartment);
+        list.add(plot);
     }
 
     public int getTypeID() {
@@ -55,19 +59,6 @@ public class PropertyType implements Serializable {
     }
 
     public ArrayList<SelectItem> getList() {
-        ArrayList<SelectItem> list = new ArrayList<SelectItem>();
-        try {
-            crs.setCommand("SELECT * FROM PROPERTYTYPES");
-            crs.execute();
-            while (crs.next()) {
-                SelectItem temp = new SelectItem();
-                temp.setLabel(crs.getString("TYPENAME"));
-                temp.setValue(crs.getInt("TYPEID"));
-                list.add(temp);
-            }
-        } catch (Exception e) {
-            Logger.getLogger(PropertyType.class.getSimpleName()).log(Level.SEVERE, null, e);
-        }
         return list;
     }
 
