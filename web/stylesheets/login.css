@@ -1,36 +1,26 @@
-@import url(https://fonts.googleapis.com/css?family=Open+Sans);
-
-
-
-body{
-   background-color: #EAECEE;
-  padding-top:50px;
-  font-family: 'Open Sans', sans-serif;
-}
-
 h3{
-  color:#000000;
+  color:#2F2D2E;
 }
 
 p{
   padding-top:10px;
-  color:#000000;
+  color:#2F2D2E;
   font-size:1.0em;
 }
 
 
 a{
-  color:#f1c40f;  
+  color:#F76367;  
 }
 
 
  a:hover {
-    color: #efa039;
+    color: #FF6367;
     text-decoration: none;
 }
 
 label {
-  color:#000000;
+  color:#2F2D2E;
   padding-top:10px;
   font-size:1.6rem;
 }
