@@ -13,7 +13,7 @@ and open the template in the editor.
 body {
     background-color: #F4F1DE;
     padding-top: 50px;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif !important;
 }
 
 .heading {
@@ -40,6 +40,14 @@ body {
 
 .error {
     color: red
+}
+
+.padding-top {
+    padding-top: 1em;
+}
+
+.padding-left {
+    padding-left: 1em;
 }
 
 .cars {
