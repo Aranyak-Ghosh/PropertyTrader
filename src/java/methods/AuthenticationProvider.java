@@ -28,7 +28,7 @@ public class AuthenticationProvider {
 
     @ManagedProperty(value = "#{user}")
     private User user;
-
+    private boolean isLoggedIn;
     private CachedRowSet crs;
 
     public User getUser() {
@@ -50,6 +50,7 @@ public class AuthenticationProvider {
             crs.setUrl(Singleton.getInstance().getDB());
             crs.setUsername(Singleton.getInstance().getUser());
             crs.setPassword(Singleton.getInstance().getPasswd());
+            this.isLoggedIn = false;
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AuthenticationProvider.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -89,6 +90,7 @@ public class AuthenticationProvider {
                     if (pass.contentEquals(pass_hash)) {
                         this.user.setLoggedIn(true);
                         this.user.setName(crs.getString("FULL_NAME"));
+                        isLoggedIn = true;
                         return "home.xhtml";
                     } else {
                         return "authError.xhtml";
@@ -102,6 +104,14 @@ public class AuthenticationProvider {
             Logger.getLogger(AuthenticationProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "authError.xhtml";
+    }
+
+    public boolean isIsLoggedIn() {
+        return isLoggedIn;
+    }
+
+    public void setIsLoggedIn(boolean isLoggedIn) {
+        this.isLoggedIn = isLoggedIn;
     }
 
     public String signUp() {
@@ -130,7 +140,7 @@ public class AuthenticationProvider {
     }
 
     public void logout() {
-        this.user.setLoggedIn(false);
+        this.isLoggedIn = false;
     }
 
 }

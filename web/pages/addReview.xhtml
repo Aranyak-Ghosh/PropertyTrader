@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head>
+    <title>Property Trader</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <link rel="stylesheet" href="Style/mycss.css" type="text/css" />
+    <link rel="stylesheet" href="Style/mycss.css" type="text/css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+</h:head>
+<h:body class="gen">
+    <c:choose>
+        <c:when test="${auth.isLoggedIn}">
+            <center>
+                <h1 class="heading">Home Page</h1>
+                <br />
+                Hope you had a pleasant Experience! Please leave a review for the Property for other
+                customers<br /><br /><br /><br /><br /><br />
+                <h:form>
+                    <table cellspacing="20">
+                        <tbody>
+                            <tr>
+                                <td><b>Rating</b></td>
+                                <td>
+                                    <h:selectOneMenu id="rating" value="#{reviewManager.review.rating}">
+                                        <f:selectItems value="#{review.getRatingList()}" />
+                                    </h:selectOneMenu>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>Review</b></td>
+                                <td>
+                                    <h:inputText id="review" value="#{reviewManager.review.review}" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br /><br />
+                    <center>
+                        <h:commandButton id="submit" value="Submit Review" action="#{reviewManager.add}" />
+                    </center>
+                    <br /><br />
+
+                    <h:commandButton id="cancel" value="Skip this Step" action="home" />
+                </h:form>
+            </center>
+        </c:when>
+        <c:otherwise>
+            <ui:include src="/pages/unauthorized.xhtml" />
+        </c:otherwise>
+    </c:choose>
+</h:body>
+
+</html>

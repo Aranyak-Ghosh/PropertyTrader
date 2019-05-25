@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scene Scope="Project" version="2">
     <Scope Scope="Faces Configuration Only"/>
-    <Scope Scope="Project"/>
+    <Scope Scope="Project">
+        <Node id="error.xhtml" x="650" y="150" zoom="true"/>
+        <Node id="statistics.xhtml" x="650" y="450" zoom="true"/>
+        <Node id="authError.xhtml" x="650" y="300" zoom="true"/>
+        <Node id="addReview.xhtml" x="150" y="750" zoom="true"/>
+        <Node id="auth.xhtml" x="900" y="150" zoom="true"/>
+        <Node id="addProperty.xhtml" x="150" y="600" zoom="true"/>
+        <Node id="confirmPurchase.xhtml" x="400" y="600" zoom="true"/>
+        <Node id="searchProperty.xhtml" x="126" y="145" zoom="true"/>
+        <Node id="editProperty.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="deleteProperty.xhtml" x="900" y="300" zoom="true"/>
+        <Node id="viewProperties.xhtml" x="400" y="450" zoom="true"/>
+        <Node id="accountCreated.xhtml" x="1150" y="150" zoom="true"/>
+        <Node id="searchResult.xhtml" x="150" y="450" zoom="true"/>
+        <Node id="home.xhtml" x="400" y="150" zoom="true"/>
+        <Node id="success.xhtml" x="400" y="300" zoom="true"/>
+    </Scope>
     <Scope Scope="All Faces Configurations"/>
 </Scene>
