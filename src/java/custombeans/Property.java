@@ -1,19 +1,20 @@
 package custombeans;
 
-import java.awt.Image;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetProvider;
+
 import util2.Singleton;
-import javax.faces.bean.SessionScoped;
 
 /**
  *
- * @author yaseenfarooqui
+ * @author aranyak
  */
 @ManagedBean(name = "property")
 @SessionScoped

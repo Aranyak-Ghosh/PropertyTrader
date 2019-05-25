@@ -1,12 +1,13 @@
 package custombeans;
 
 import java.io.Serializable;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 /**
  *
- * @author yaseenfarooqui
+ * @author aranyak
  */
 @ManagedBean(name = "user")
 @SessionScoped

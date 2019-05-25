@@ -2,13 +2,14 @@ package custombeans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.model.SelectItem;
 import javax.faces.bean.SessionScoped;
 
 /**
  *
- * @author yaseenfarooqui
+ * @author aranyak
  */
 @ManagedBean(name = "review")
 @SessionScoped

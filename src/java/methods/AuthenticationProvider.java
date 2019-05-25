@@ -1,25 +1,31 @@
 package methods;
 
 import custombeans.User;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import java.io.IOException;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.sql.rowset.CachedRowSet;
+import javax.sql.rowset.RowSetProvider;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.sql.rowset.CachedRowSet;
-import javax.sql.rowset.RowSetProvider;
+
 import util2.Singleton;
 
 /**
  *
- * @author yaseenfarooqui
+ * @author aranyak
  */
 @ManagedBean(name = "auth")
 

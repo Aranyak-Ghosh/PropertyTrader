@@ -1,7 +1,7 @@
 package custombeans;
 
 import java.io.Serializable;
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -9,13 +9,16 @@ import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
+
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetProvider;
+import java.sql.SQLException;
+
 import util2.Singleton;
 
 /**
  *
- * @author yaseenfarooqui
+ * @author aranyak
  */
 @ManagedBean(name = "propertyType")
 @SessionScoped

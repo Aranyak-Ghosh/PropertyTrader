@@ -1,30 +1,32 @@
 package methods;
 
 import java.io.IOException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.sql.rowset.CachedRowSet;
+import javax.sql.rowset.RowSetProvider;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.sql.rowset.CachedRowSet;
 
 import custombeans.Property;
-
 import custombeans.User;
-import javax.sql.rowset.RowSetProvider;
 
 import util2.Singleton;
 
 /**
  *
- * @author yaseenfarooqui
+ * @author aranyak
  */
 @ManagedBean(name = "propertyManager")
 @SessionScoped
